@@ -93,5 +93,8 @@
     "hooks": {
       "pre-commit": "lint-staged && npm run build"
     }
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.3"
   }
 }
