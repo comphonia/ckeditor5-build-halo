@@ -17,21 +17,22 @@ export default class InsertImage extends Plugin {
 
 			// Callback executed once the image icon is clicked.
 			view.on("execute", () => {
-				const imageUrl = prompt("Image URL");
+				const addImage = file => {
+					if (file) {
+						editor.model.change(writer => {
+							const imageElement = writer.createElement("image", {
+								src: file[0].url
+							});
 
-				if (imageUrl) {
-					editor.model.change(writer => {
-						const imageElement = writer.createElement("image", {
-							src: imageUrl
+							// Insert the image in the current selection location.
+							editor.model.insertContent(
+								imageElement,
+								editor.model.document.selection
+							);
 						});
-
-						// Insert the image in the current selection location.
-						editor.model.insertContent(
-							imageElement,
-							editor.model.document.selection
-						);
-					});
-				}
+					}
+				};
+				window.mediamanagerConfig(addImage);
 			});
 
 			return view;
